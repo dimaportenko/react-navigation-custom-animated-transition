@@ -7,7 +7,13 @@ const Stack = createStackNavigator();
 
 export const Navigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: 'CUSTOM TRANSITION',
+        headerTitleStyle: {
+          letterSpacing: 3,
+        },
+      }}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="List" component={ListScreen} />
     </Stack.Navigator>
