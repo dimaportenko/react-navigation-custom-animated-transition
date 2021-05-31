@@ -13,6 +13,8 @@ export const Navigator = () => {
         headerTitleStyle: {
           letterSpacing: 3,
         },
+        headerBackTitleVisible: false,
+        headerTintColor: 'black',
       }}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="List" component={ListScreen} />

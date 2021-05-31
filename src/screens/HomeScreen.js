@@ -6,7 +6,7 @@ import {ImageCard} from '../components/ImageCard';
 import {AvailableCardsButton} from '../components/AvailableCardsButton';
 import {MenuButtons} from '../components/MenuButtons';
 
-export function HomeScreen() {
+export function HomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <ExpandableCard />
@@ -18,7 +18,11 @@ export function HomeScreen() {
         <ImageCard source={require('../../assets/images/1.jpg')} />
         <View style={{height: Spacings.s16}} />
 
-        <AvailableCardsButton onPress={() => {}} />
+        <AvailableCardsButton
+          onPress={() => {
+            navigation.navigate('List');
+          }}
+        />
         <View style={{height: Spacings.s16}} />
 
         <MenuButtons />

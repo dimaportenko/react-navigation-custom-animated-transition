@@ -49,8 +49,7 @@ export const ExpandableCard = (props: ExpandableCardProps): React$Node => {
         <Text style={styles.cardDetails}>
           {expanded
             ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi'
-            : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt'
-          }
+            : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt'}
         </Text>
         {renderExpandButton()}
       </View>
