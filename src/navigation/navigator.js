@@ -2,10 +2,13 @@ import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ListScreen} from '../screens/ListScreen';
+import {useState} from 'react';
 
 const Stack = createStackNavigator();
 
 export const Navigator = () => {
+  const [index, setIndex] = useState(0);
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -16,8 +19,12 @@ export const Navigator = () => {
         headerBackTitleVisible: false,
         headerTintColor: 'black',
       }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="List" component={ListScreen} />
+      <Stack.Screen name="Home">
+        {props => <HomeScreen {...props} index={index} setIndex={setIndex} />}
+      </Stack.Screen>
+      <Stack.Screen name="List">
+        {props => <ListScreen {...props} index={index} setIndex={setIndex} />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

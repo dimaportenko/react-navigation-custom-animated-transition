@@ -1,19 +1,31 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+} from 'react-native';
 import {Spacings} from '../utils/spacing';
 import {cards} from '../data/cards';
 import {ImageCard} from '../components/ImageCard';
 
-export function ListScreen() {
+export function ListScreen({navigation, index, setIndex}) {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={{padding: Spacings.s16}}>
         <View style={{height: Spacings.s16}} />
         <Text style={styles.title}>Cards List</Text>
         <View style={{height: Spacings.s16}} />
-        {cards.map((item, index) => (
+        {cards.map((item, cardIndex) => (
           <View key={item.subtitle}>
-            <ImageCard source={item.url} />
+            <Pressable
+              onPress={() => {
+                setIndex(cardIndex);
+                navigation.goBack();
+              }}>
+              <ImageCard source={item.url} />
+            </Pressable>
             <View style={{height: Spacings.s16}} />
           </View>
         ))}

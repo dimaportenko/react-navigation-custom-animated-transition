@@ -5,8 +5,9 @@ import {Spacings} from '../utils/spacing';
 import {ImageCard} from '../components/ImageCard';
 import {AvailableCardsButton} from '../components/AvailableCardsButton';
 import {MenuButtons} from '../components/MenuButtons';
+import {cards} from '../data/cards';
 
-export function HomeScreen({navigation}) {
+export function HomeScreen({navigation, index, setIndex}) {
   return (
     <View style={styles.container}>
       <ExpandableCard />
@@ -15,7 +16,7 @@ export function HomeScreen({navigation}) {
         <Text style={styles.eventCardTitle}>Selected Card</Text>
         <View style={{height: Spacings.s16}} />
 
-        <ImageCard source={require('../../assets/images/1.jpg')} />
+        <ImageCard source={cards[index]?.url} />
         <View style={{height: Spacings.s16}} />
 
         <AvailableCardsButton
