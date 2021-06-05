@@ -14,9 +14,7 @@ import {
 import ArrowUp from './svg/ArrowUp';
 import ArrowDown from './svg/ArrowDown';
 
-type ExpandableCardProps = {};
-
-export const ExpandableCard = (props: ExpandableCardProps): React$Node => {
+export const ExpandableCard = ({onLayout}) => {
   const [expanded, setExpanded] = useState(false);
 
   const renderExpandButton = () => {
@@ -38,7 +36,7 @@ export const ExpandableCard = (props: ExpandableCardProps): React$Node => {
   };
 
   return (
-    <View>
+    <View onLayout={onLayout} collapsable={false}>
       <View style={styles.userCardContainer}>
         <View style={styles.titleWrap}>
           <View>

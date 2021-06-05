@@ -1,5 +1,7 @@
 import * as React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+} from '@react-navigation/stack';
 import {HomeScreen} from '../screens/HomeScreen';
 import {ListScreen} from '../screens/ListScreen';
 import {useState} from 'react';
@@ -11,6 +13,8 @@ export const Navigator = () => {
 
   return (
     <Stack.Navigator
+      mode="modal"
+      headerMode="screen"
       screenOptions={{
         headerTitle: 'CUSTOM TRANSITION',
         headerTitleStyle: {
@@ -22,7 +26,19 @@ export const Navigator = () => {
       <Stack.Screen name="Home">
         {props => <HomeScreen {...props} index={index} setIndex={setIndex} />}
       </Stack.Screen>
-      <Stack.Screen name="List">
+      <Stack.Screen
+        name="List"
+        options={{
+          cardStyle: {
+            backgroundColor: 'transparent',
+          },
+          cardStyleInterpolator: ({current}) => ({
+            cardStyle: {
+              opacity: current.progress,
+              // opacity: 1,
+            },
+          }),
+        }}>
         {props => <ListScreen {...props} index={index} setIndex={setIndex} />}
       </Stack.Screen>
     </Stack.Navigator>

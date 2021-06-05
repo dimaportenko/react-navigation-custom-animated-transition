@@ -1,32 +1,84 @@
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  useWindowDimensions,
+} from 'react-native';
 import {ExpandableCard} from '../components/ExpandableCard';
 import {Spacings} from '../utils/spacing';
 import {ImageCard} from '../components/ImageCard';
 import {AvailableCardsButton} from '../components/AvailableCardsButton';
 import {MenuButtons} from '../components/MenuButtons';
 import {cards} from '../data/cards';
+import {useState} from 'react';
+import {useCardAnimation} from '@react-navigation/stack';
 
 export function HomeScreen({navigation, index, setIndex}) {
+  const {height} = useWindowDimensions();
+  const {next} = useCardAnimation();
+  const [offset, setCardHeight] = useState(0);
+  const [bottomOffset, setBottomOffset] = useState(0);
+
+  const translateYUp =
+    next?.progress.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, -offset - 22 - Spacings.s16],
+    }) ?? 0;
+
+  const translateYDown =
+    next?.progress.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, bottomOffset],
+    }) ?? 0;
+
+  const opacity =
+    next?.progress.interpolate({
+      inputRange: [0.99, 1],
+      outputRange: [1, 0],
+    }) ?? 1;
+
+  const onLayout = event => {
+    const h = event.nativeEvent.layout.height;
+    setCardHeight(h + Spacings.s24);
+  };
+
+  const onBottomLayout = event => {
+    const y = event.nativeEvent.layout.y;
+    setBottomOffset(height - y);
+  };
+
   return (
     <View style={styles.container}>
-      <ExpandableCard />
-      <View style={{height: Spacings.s24}} />
+      <Animated.View style={{transform: [{translateY: translateYUp}]}}>
+        <ExpandableCard onLayout={onLayout} />
+        <View style={{height: Spacings.s24}} />
+      </Animated.View>
       <View>
-        <Text style={styles.eventCardTitle}>Selected Card</Text>
-        <View style={{height: Spacings.s16}} />
+        <Animated.View style={{transform: [{translateY: translateYUp}]}}>
+          <Text style={styles.eventCardTitle}>Selected Card</Text>
+          <View style={{height: Spacings.s16}} />
+        </Animated.View>
 
-        <ImageCard source={cards[index]?.url} />
-        <View style={{height: Spacings.s16}} />
+        <Animated.View style={{ opacity }}>
+          <ImageCard source={cards[index]?.url} />
+        </Animated.View>
 
-        <AvailableCardsButton
-          onPress={() => {
-            navigation.navigate('List');
-          }}
-        />
-        <View style={{height: Spacings.s16}} />
+        <Animated.View style={{transform: [{translateY: translateYDown}]}}>
+          <View style={{height: Spacings.s16}} onLayout={onBottomLayout} />
 
-        <MenuButtons />
+          <AvailableCardsButton
+            onPress={() => {
+              navigation.navigate('List', {
+                offset,
+              });
+            }}
+          />
+          <View style={{height: Spacings.s16}} />
+
+          <MenuButtons />
+        </Animated.View>
       </View>
     </View>
   );
