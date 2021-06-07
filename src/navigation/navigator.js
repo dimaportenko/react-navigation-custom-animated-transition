@@ -11,6 +11,7 @@ export const Navigator = () => {
 
   return (
     <Stack.Navigator
+      mode="modal"
       screenOptions={{
         headerTitle: 'CUSTOM TRANSITION',
         headerTitleStyle: {
@@ -22,7 +23,18 @@ export const Navigator = () => {
       <Stack.Screen name="Home">
         {props => <HomeScreen {...props} index={index} setIndex={setIndex} />}
       </Stack.Screen>
-      <Stack.Screen name="List">
+      <Stack.Screen
+        name="List"
+        options={{
+          cardStyle: {
+            backgroundColor: 'transparent',
+          },
+          cardStyleInterpolator: ({current}) => ({
+            cardStyle: {
+              opacity: current.progress,
+            },
+          }),
+        }}>
         {props => <ListScreen {...props} index={index} setIndex={setIndex} />}
       </Stack.Screen>
     </Stack.Navigator>

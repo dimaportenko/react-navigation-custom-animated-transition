@@ -23,7 +23,6 @@ export const ImageCard = ({source}: ImageCardProps): React$Node => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: 'black',
     height: 215,
     borderRadius: 20,
     overflow: 'hidden',
